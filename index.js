@@ -6,8 +6,8 @@ const app = express()
 const server = http.createServer(app)
 const io = require("socket.io")(server, {
 	cors: {
-		origin: "https://rahulscreenvideo.netlify.app",
-		//origin: "http://localhost:3000",
+		//origin: "https://rahulscreenvideo.netlify.app",
+		origin: "http://localhost:3000",
 		methods: [ "GET", "POST" ]
 	}
 })
@@ -18,6 +18,12 @@ io.on("connection", (socket) => {
 	socket.on('callStatuss',(data)=>{
 		socket.broadcast.emit('callrecstatus',data)
 	})
+
+
+	socket.on('bothEnd',(data)=>{
+		socket.broadcast.emit('cutCallBoth',data)
+	})
+
 
 	socket.on("disconnect", () => {
 		socket.broadcast.emit("callEnded")
